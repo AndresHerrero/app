@@ -23,7 +23,7 @@ login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
 app.register_blueprint(auth_bp)
 
-reader = easyocr.Reader(['en', 'es'], gpu=False)
+reader = easyocr.Reader(['en', 'es', 'fr', 'de', 'it', 'pt'], gpu=False)
 
 @login_manager.user_loader
 def load_user(user_id):
