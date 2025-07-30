@@ -45,7 +45,7 @@ def index():
         saved_path = os.path.join(UPLOAD_FOLDER, filename)
         image_file.save(saved_path)
 
-        reader = easyocr.Reader(['en', 'es', 'fr', 'de', 'it', 'pt', 'ch_tra'], gpu=False)
+        reader = easyocr.Reader(['en', 'es', 'fr', 'de', 'it', 'pt'], gpu=False)
         resultado = reader.readtext(saved_path, detail=0)
         texto_extraido = "\n".join(resultado)
 
@@ -81,8 +81,7 @@ def index():
 
         idiomas_legibles = {
             "es": "Español", "en": "Inglés", "fr": "Francés",
-            "de": "Alemán", "it": "Italiano", "pt": "Portugués",
-            "zh-cn": "Chino", "zh": "Chino", "ch_tra": "Chino tradicional"
+            "de": "Alemán", "it": "Italiano", "pt": "Portugués"
         }
 
         idioma_origen_nombre = idiomas_legibles.get(idioma_origen, idioma_origen)
