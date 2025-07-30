@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Procesar imagen</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: #f1f1f1;
+        }
+        .form-control, .form-select {
+            background-color: #1e1e1e;
+            color: #ffffff;
+            border: 1px solid #444;
+        }
+        .form-label {
+            color: #ffffff;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+        }
+        .btn-success {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+        .btn-success:hover {
+            background-color: #45a049;
+        }
+        .card {
+            background-color: #1e1e1e;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <h2 class="text-center text-success mb-4">📝 Procesar nueva imagen</h2>
+
+        <div class="card shadow p-4 mx-auto" style="max-width: 600px;">
+            <form method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="image" class="form-label">Sube una imagen:</label>
+                    <input class="form-control" type="file" name="image" accept="image/*" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="idioma" class="form-label">Idioma de traducción:</label>
+                    <select class="form-select" name="idioma">
+                        <option value="es">Español</option>
+                        <option value="en">Inglés</option>
+                        <option value="fr">Francés</option>
+                        <option value="de">Alemán</option>
+                        <option value="it">Italiano</option>
+                        <option value="pt">Portugués</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-success w-100" type="submit">🚀 Procesar imagen</button>
+            </form>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ url_for('index') }}" class="btn btn-outline-light">⬅️ Volver al inicio</a>
+        </div>
+    </div>
+    <div id="loader" style="display: none;">
+  <div class="overlay"></div>
+  <div class="loader-container">
+    <p class="loader-text">🔄 Procesando imagen...</p>
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner"></div>
+    </div>
+  </div>
+</div>
+
+    <style>
+        #loader .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 998;
+        }
+
+        .loader-container {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 999;
+        }
+
+        .loader-text {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar-outer {
+            width: 300px;
+            height: 8px;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .progress-bar-inner {
+            width: 40%;
+            height: 100%;
+            background-color: #28a745; /* Verde */
+            animation: loading 1s linear infinite;
+        }
+
+        @keyframes loading {
+            0% { margin-left: -40%; }
+            100% { margin-left: 100%; }
+        }
+    </style>
+
+
+    <script>
+        document.querySelector("form").addEventListener("submit", function () {
+            document.getElementById("loader").style.display = "block";
+        });
+    </script>
+
+
+</body>
+</html>

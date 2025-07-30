@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>OCR Web App - Inicio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: #f1f1f1;
+        }
+        .card {
+            background-color: #1e1e1e;
+            border: none;
+        }
+        .btn-success {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+        .btn-success:hover {
+            background-color: #45a049;
+        }
+        .miniatura {
+            width: 100%;
+            max-height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="d-flex justify-content-end p-3">
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-light">🚪 Cerrar sesión</a>
+    </nav>
+
+    <div class="container py-5">
+        <h2 class="text-center text-success mb-4">👋 Bienvenido, {{ username }}!</h2>
+
+        {% if uploads %}
+        <h4 class="text-success mb-3">🖼 Últimas imágenes procesadas</h4>
+        <div class="row g-3 mb-5">
+            {% for upload in uploads %}
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="position-relative">
+                    <img src="{{ url_for('imagen', nombre_archivo=upload.filename) }}" alt="Imagen subida" class="miniatura shadow-sm">
+
+                    <form method="POST" action="{{ url_for('eliminar', upload_id=upload.id) }}" style="position:absolute; top:5px; right:5px;">
+                        <button class="btn btn-sm btn-danger" title="Eliminar" onclick="return confirm('¿Eliminar esta imagen?')">✖</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p style="color: #ffffff;">Aún no has subido ninguna imagen.</p>
+        {% endif %}
+
+        {% if compartidas %}
+        <h4 class="text-success mb-3 mt-5">📥 Imágenes compartidas contigo</h4>
+        <div class="row g-3">
+            {% for item in compartidas %}
+            <div class="col-6 col-md-4 col-lg-2">
+                <div class="card shadow-sm p-2 text-center">
+                    <img src="{{ url_for('imagen', nombre_archivo=item.upload.filename) }}" class="miniatura mb-2">
+                    <p class="small text-light">De: {{ item.sender.username }}</p>
+                    <a href="{{ url_for('resultado_compartido', upload_id=item.upload.id) }}" class="btn btn-sm btn-outline-light">Ver</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+
+        <div class="text-center mt-4">
+            <a href="{{ url_for('procesar') }}" class="btn btn-success btn-lg">📝 Procesar nueva imagen</a>
+        </div>
+    </div>
+</body>
+</html>

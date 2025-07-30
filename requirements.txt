@@ -1,0 +1,10 @@
+flask
+flask-login
+flask-sqlalchemy
+werkzeug
+easyocr
+opencv-python-headless
+gTTS
+googletrans==4.0.0-rc1
+Pillow
+langdetect
