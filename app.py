@@ -23,7 +23,6 @@ login_manager.login_view = 'auth.login'
 login_manager.init_app(app)
 app.register_blueprint(auth_bp)
 
-reader = easyocr.Reader(['en', 'es', 'fr', 'de', 'it', 'pt'], gpu=False)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -47,6 +46,7 @@ def index():
         saved_path = os.path.join(UPLOAD_FOLDER, filename)
         image_file.save(saved_path)
 
+        reader = easyocr.Reader(['en', 'es'], gpu=False, download_enabled=True)
         resultado = reader.readtext(saved_path, detail=0)
         texto_extraido = "\n".join(resultado)
 
